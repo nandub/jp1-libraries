@@ -1,0 +1,13 @@
+.SUFFIXES:
+.SUFFIXES: .so .cpp .hpp 
+
+GPP = g++
+NAME=jp12serial
+JAVA_INCLUDE=/usr/lib/jvm/java-6-openjdk/include
+INCLUDE = -I$(JAVA_INCLUDE) -I$(JAVA_INCLUDE)/linux
+
+all: lib$(NAME).so
+
+lib$(NAME).so: src/$(NAME).cpp src/$(NAME).hpp
+	$(GPP) -shared -fPIC -o $@ $(INCLUDE) $?
+
