@@ -1,3 +1,40 @@
+Source Code for Version 0.23 of jp12serial.dll
+
+* This version adds support for JP2 and similar remotes where the EEPROM area starts on	a flash page boundary but may not consist of a whole number of flash pages.  The only known example at present is the URC7955 where the EEPROM length is 0xFFC, four bytes short of two 0x800-byte flash pages.  getRemoteEepromSize() reports the true size of the EEPROM area but readRemote(...) and writeRemote(...) allow reading and writing within the whole of the flash pages containing the EEPROM area.
+
+Graham Dixon (mathdon)
+19 August 2018
+
+
+Source Code for Version 0.22 of jp12serial.dll
+
+* This version adds support for JP3.1.  This is a 32-bit version of JP1.4N but with an important timing difference.  There is a delay of nearly 5 seconds between sending a GetInfo request and the arrival of the response.  To allow for this, ReadSerial() has been modified to accept an additional optional parameter, a maximum wait duration in seconds as a double.  A safety feature has also been added to prevent other interface types being tried if the remote passes initial tests as being JP1.4/JP2 but the call to jp2_14GetInfoAndSig() fails.  It is possible that testing for other types may corrupt a JP1.4/JP2 remote.
+
+* This version also supports JP2N, which is a variant of JP2 with the same new signature block structure as used in JP1.4N.
+
+Graham Dixon (mathdon)
+14 October 2016
+
+
+Source Code for Version 0.21 of jp12serial.dll
+
+* added support for the new version (JP1.4N) of JP1.4 that has a different structure for its signature block from that of JP1.4 or JP2.
+
+Graham Dixon (mathdon)
+28 April 2016
+
+
+Source Code for Version 0.20 of jp12serial.dll
+
+* added support for remotes with address range > 64KB (JP3)
+
+* corrected error causing one page too many to be erased during write operations
+
+* Detection of FTDI chips modified by Graham Dixon (mathdon) to recognise the new FT230X chip used in Tommy Tyler's new interface leads and widgets.
+
+Michael Dreher (MikeT)
+26 June 2014
+
 Source Code for Version 0.19 of jp12serial.dll
 
 * support for the new communications protocol used by JP1.4 and JP2 remotes added by Dave Reed (3FG)

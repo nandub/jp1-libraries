@@ -1,50 +1,22 @@
-.SUFFIXES:
-.SUFFIXES: .so .cpp .hpp 
+JAVA_INCLUDE=/System/Library/Frameworks/JavaVM.framework/Versions/A/Headers
+INCLUDE = -I$(JAVA_INCLUDE) -I$(JAVA_INCLUDE)/linux
+OPT=-O2
+DEBUG=
+SHARED_OPTS=-shared -fPIC
+EXTENSION=jnilib
 
-GPP = g++
-JAVA_INCLUDE = /System/Library/Frameworks/JavaVM.framework/Headers
-INCLUDE = -I$(JAVA_INCLUDE)
-COPTS = -Wall -shared -fPIC
+all: libjp12serial.$(EXTENSION)
 
-VERSION=019
-LIBNAME=libjp12serial.jnilib
-OS=Mac\ OS\ X
-DIR_PPC=$(OS)-ppc
-DIR_I386=$(OS)-i386
-DIR_X86_64=$(OS)-x86_64
-TARGET_PPC=$(DIR_PPC)/$(LIBNAME)
-TARGET_I386=$(DIR_I386)/$(LIBNAME)
-TARGET_X86_64=$(DIR_X86_64)/$(LIBNAME)
-DIRDIST=dist
-BINDIST=$(DIRDIST)/jp12serial_$(VERSION)_MacOSX.zip
-SOURCEDIST=$(DIRDIST)/jp12serial_$(VERSION)_Source.zip
-SOURCEDISTFILES=Makefile.Linux Makefile.MacOSX ReadMe.txt src/StdAfx.h src/*.cpp src/*.hpp src/*.h
+deploy: ../Mac\ OS\ X-x86_64/libjp12serial.$(EXTENSION) ../Mac\ OS\ X-i386/libjp12serial.$(EXTENSION)
 
-all: $(TARGET_I386) $(TARGET_X86_64)
+libjp12serial.$(EXTENSION): jp12serial.cpp jp12serial.hpp
+	$(CXX) $(INCLUDE) $(OPT) $(DEBUG) $(SHARED_OPTS) -o $@ $<
 
-dist: $(BINDIST) $(SOURCEDIST)
+../Mac\ OS\ X-x86_64/libjp12serial.$(EXTENSION): jp12serial.cpp jp12serial.hpp
+	$(CXX) $(INCLUDE) -m64 $(OPT) $(DEBUG) $(SHARED_OPTS) -o "$@" "$<"
 
-$(BINDIST): $(TARGET_I386) $(TARGET_X86_64)
-	mkdir -p $(DIRDIST)
-	zip -r $(BINDIST) $(DIR_I386) $(DIR_X86_64)
-
-$(SOURCEDIST): $(SOURCEDISTFILES)
-	mkdir -p $(DIRDIST)
-	zip -r $(SOURCEDIST) $(SOURCEDISTFILES)
+../Mac\ OS\ X-i386/libjp12serial.$(EXTENSION): jp12serial.cpp jp12serial.hpp
+	$(CXX) $(INCLUDE) -m32 $(OPT) $(DEBUG) $(SHARED_OPTS) -o "$@" "$<"
 
 clean:
-	rm $(TARGET_PPC) $(TARGET_I386) $(TARGET_X86_64) $(BINDIST) $(SOURCEDIST) || true
-	rmdir $(DIR_PPC) $(DIR_I386) $(DIR_X86_64) $(DIRDIST) || true
-
-$(TARGET_X86_64): src/jp12serial.cpp src/jp12serial.hpp
-	mkdir -p $(DIR_X86_64)
-	$(GPP) $(INCLUDE) $(COPTS) -arch x86_64 -o $(TARGET_X86_64) src/jp12serial.cpp
-
-$(TARGET_I386): src/jp12serial.cpp src/jp12serial.hpp
-	mkdir -p $(DIR_I386)
-	$(GPP) $(INCLUDE) $(COPTS) -arch i386 -o $(TARGET_I386) src/jp12serial.cpp
-
-$(TARGET_PPC): src/jp12serial.cpp src/jp12serial.hpp
-	mkdir -p $(DIR_PPC)
-	$(GPP) $(INCLUDE) $(COPTS) -arch ppc -o $(TARGET_PPC) src/jp12serial.cpp
-
+	rm -f ../*/*.$(EXTENSION)
