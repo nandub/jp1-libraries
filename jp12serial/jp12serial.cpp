@@ -573,7 +573,7 @@ int ReadSerial( HANDLE handle, unsigned char *buff, int len, DWORD* bytesRead, d
       break;
     *bytesRead += bytes;
 	double elapsed = ( clock() - start ) / (double) CLOCKS_PER_SEC;
-	if (*bytesRead >= (unsigned int)len || elapsed > duration && bytes == 0)
+	if (*bytesRead >= (unsigned int)len || (elapsed > duration && bytes == 0))
 	  break;
   }
   if(*bytesRead != len)

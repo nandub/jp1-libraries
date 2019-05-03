@@ -123,15 +123,15 @@ LINK32=xilink6.exe
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 # Begin Source File
 
-SOURCE=.\src\DecodeIR.cpp
+SOURCE=.\DecodeIR.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\src\DecodeIR.DEF
+SOURCE=.\DecodeIR.DEF
 # End Source File
 # Begin Source File
 
-SOURCE=.\src\StdAfx.cpp
+SOURCE=.\StdAfx.cpp
 # ADD CPP /Yc"stdafx.h"
 # End Source File
 # End Group
@@ -140,11 +140,11 @@ SOURCE=.\src\StdAfx.cpp
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
 # Begin Source File
 
-SOURCE=.\src\DecodeIR.h
+SOURCE=.\DecodeIR.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\src\StdAfx.h
+SOURCE=.\StdAfx.h
 # End Source File
 # End Group
 # Begin Group "Resource Files"
@@ -153,7 +153,7 @@ SOURCE=.\src\StdAfx.h
 # End Group
 # Begin Source File
 
-SOURCE=.\src\ReadMe.txt
+SOURCE=.\ReadMe.txt
 # End Source File
 # End Target
 # End Project

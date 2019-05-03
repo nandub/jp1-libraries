@@ -1,52 +1,11 @@
-.SUFFIXES:
-.SUFFIXES: .so .cpp .hpp .h
-
-GPP = g++
-JAVA_INCLUDE = /System/Library/Frameworks/JavaVM.framework/Headers
-INCLUDE = -I$(JAVA_INCLUDE)
-COPTS = -Wall -shared -fPIC
-
 NAME=DecodeIR
-VERSION=244
-LIBNAME=lib$(NAME).jnilib
-OS=Mac\ OS\ X
-DIR_PPC=$(OS)-ppc
-DIR_I386=$(OS)-i386
-DIR_X86_64=$(OS)-x86_64
-TARGET_PPC=$(DIR_PPC)/$(LIBNAME)
-TARGET_I386=$(DIR_I386)/$(LIBNAME)
-TARGET_X86_64=$(DIR_X86_64)/$(LIBNAME)
-DIRDIST=dist
-BINDIST=$(DIRDIST)/$(NAME)_$(VERSION)_MacOSX.zip
-SOURCEDIST=$(DIRDIST)/$(NAME)_$(VERSION)_Source.zip
-SOURCEDISTFILES=Makefile.Linux Makefile.MacOSX *.DEF *.dsp *.dsw *.sln *.suo *.vcproj* src/StdAfx.h src/*.cpp src/*.h
+JAVA_INCLUDE=/System/Library/Frameworks/JavaVM.framework/Versions/1.6.0/Home
+INCLUDES=-I$(JAVA_INCLUDE)/include -I$(JAVA_INCLUDE)/lib -Icom/hifiremote/decodeir
 
-all: $(TARGET_I386) $(TARGET_X86_64)
-
-dist: $(BINDIST) $(SOURCEDIST)
-
-$(BINDIST): $(TARGET_I386) $(TARGET_X86_64)
-	mkdir -p $(DIRDIST)
-	zip -r $(BINDIST) $(DIR_I386) $(DIR_X86_64)
-
-$(SOURCEDIST): $(SOURCEDISTFILES)
-	mkdir -p $(DIRDIST)
-	zip -r $(SOURCEDIST) $(SOURCEDISTFILES)
+all:	lib$(NAME).jnilib
 
 clean:
-	rm -f $(TARGET_PPC).dSYM $(TARGET_I386).dSYM $(TARGET_X86_64).dSYM || true
-	rm -f $(TARGET_PPC) $(TARGET_I386) $(TARGET_X86_64) $(BINDIST) $(SOURCEDIST) || true
-	rmdir $(DIR_PPC) $(DIR_I386) $(DIR_X86_64) $(DIRDIST) || true
+	rm lib$(NAME).jnilib
 
-$(TARGET_X86_64): src/$(NAME).cpp src/$(NAME).h
-	mkdir -p $(DIR_X86_64)
-	$(GPP) $(INCLUDE) $(COPTS) -arch x86_64 -o $(TARGET_X86_64) src/$(NAME).cpp
-
-$(TARGET_I386): src/$(NAME).cpp src/$(NAME).h
-	mkdir -p $(DIR_I386)
-	$(GPP) $(INCLUDE) $(COPTS) -arch i386 -o $(TARGET_I386) src/$(NAME).cpp
-
-$(TARGET_PPC): src/$(NAME).cpp src/$(NAME).h
-	mkdir -p $(DIR_PPC)
-	$(GPP) $(INCLUDE) $(COPTS) -arch ppc -o $(TARGET_PPC) src/$(NAME).cpp
-
+lib$(NAME).jnilib:	$(NAME).cpp
+	g++ -shared -fPIC -arch ppc -o $@ $(INCLUDES) $?

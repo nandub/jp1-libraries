@@ -1,4 +1,5 @@
-JAVA_INCLUDE=/System/Library/Frameworks/JavaVM.framework/Versions/A/Headers
+MAJOR_VERSION=$(shell sw_vers -productVersion | cut -d '.' -f 1,2)
+JAVA_INCLUDE=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX$(MAJOR_VERSION).sdk/System/Library/Frameworks/JavaVM.framework/Versions/A/Headers
 INCLUDE = -I$(JAVA_INCLUDE) -I$(JAVA_INCLUDE)/linux
 OPT=-O2
 DEBUG=

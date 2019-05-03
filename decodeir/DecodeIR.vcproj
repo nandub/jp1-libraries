@@ -322,7 +322,7 @@
 			Filter="cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 			>
 			<File
-				RelativePath="src\DecodeIR.cpp"
+				RelativePath="DecodeIR.cpp"
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
@@ -350,11 +350,11 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="src\DecodeIR.DEF"
+				RelativePath="DecodeIR.DEF"
 				>
 			</File>
 			<File
-				RelativePath="src\StdAfx.cpp"
+				RelativePath="StdAfx.cpp"
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
@@ -390,19 +390,19 @@
 			Filter="h;hpp;hxx;hm;inl"
 			>
 			<File
-				RelativePath="src\DecodeIR.h"
+				RelativePath="DecodeIR.h"
 				>
 			</File>
 			<File
-				RelativePath=".\src\com\hifiremote\decodeir\DecodeIRCaller.h"
+				RelativePath=".\com\hifiremote\decodeir\DecodeIRCaller.h"
 				>
 			</File>
 			<File
-				RelativePath=".\src\DecodeIRCaller.h"
+				RelativePath=".\DecodeIRCaller.h"
 				>
 			</File>
 			<File
-				RelativePath="src\StdAfx.h"
+				RelativePath="StdAfx.h"
 				>
 			</File>
 		</Filter>
@@ -412,7 +412,7 @@
 			>
 		</Filter>
 		<File
-			RelativePath="src\ReadMe.txt"
+			RelativePath="ReadMe.txt"
 			>
 		</File>
 	</Files>

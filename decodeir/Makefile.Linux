@@ -7,5 +7,5 @@ all:	lib$(NAME).so
 clean:
 	rm lib$(NAME).so
 
-lib$(NAME).so:	src/$(NAME).cpp
+lib$(NAME).so:	$(NAME).cpp
 	g++ -shared -fPIC -o $@ $(INCLUDES) $?
