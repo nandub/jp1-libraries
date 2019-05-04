@@ -1,10 +1,10 @@
-MAJOR_VERSION=$(shell sw_vers -productVersion | cut -d '.' -f 1,2)
-JAVA_INCLUDE=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX$(MAJOR_VERSION).sdk/System/Library/Frameworks/JavaVM.framework/Versions/A/Headers
-INCLUDE = -I$(JAVA_INCLUDE) -I$(JAVA_INCLUDE)/linux
+JAVA_INCLUDE = $(shell ../../scripts/javaenv.sh)
+INCLUDE = $(JAVA_INCLUDE)
 OPT=-O2
 DEBUG=
 SHARED_OPTS=-shared -fPIC
 EXTENSION=jnilib
+ZIPFILE=jp12serial.zip
 
 all: libjp12serial.$(EXTENSION)
 
@@ -14,10 +14,16 @@ libjp12serial.$(EXTENSION): jp12serial.cpp jp12serial.hpp
 	$(CXX) $(INCLUDE) $(OPT) $(DEBUG) $(SHARED_OPTS) -o $@ $<
 
 ../Mac\ OS\ X-x86_64/libjp12serial.$(EXTENSION): jp12serial.cpp jp12serial.hpp
+	$(shell ../../scripts/mkdir_p.sh "$@")
 	$(CXX) $(INCLUDE) -m64 $(OPT) $(DEBUG) $(SHARED_OPTS) -o "$@" "$<"
 
 ../Mac\ OS\ X-i386/libjp12serial.$(EXTENSION): jp12serial.cpp jp12serial.hpp
+	$(shell ../../scripts/mkdir_p.sh "$@")
 	$(CXX) $(INCLUDE) -m32 $(OPT) $(DEBUG) $(SHARED_OPTS) -o "$@" "$<"
+
+zip: deploy
+	rm -f libjp12serial.jnilib ../../$(ZIPFILE)
+	(cd ..; zip -r ../$(ZIPFILE) *)
 
 clean:
 	rm -f ../*/*.$(EXTENSION)

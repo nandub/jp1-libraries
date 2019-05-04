@@ -1,11 +1,26 @@
-NAME=DecodeIR
-JAVA_INCLUDE=/usr/lib/jvm/java-6-sun/include
-INCLUDES=-I$(JAVA_INCLUDE) -I$(JAVA_INCLUDE)/linux -Icom/hifiremote/decodeir
+#  -*- Makefile -*-
+JAVA_INCLUDE=/usr/lib/jvm/java/include
+INCLUDE = -I$(JAVA_INCLUDE) -I$(JAVA_INCLUDE)/linux
+OPT=-O2
+DEBUG=
+SHARED_OPTS=-shared -fPIC
+ZIPFILE=DecodeIR.zip
 
-all:	lib$(NAME).so
+all: libDecodeIR.so
+
+deploy: libDecodeIR-amd64.so libDecodeIR-i386.so
+
+libDecodeIR.so: DecodeIR.cpp
+	$(CXX) $(INCLUDE) $(OPT) $(DEBUG) $(SHARED_OPTS) -o $@ $<
+
+libDecodeIR-amd64.so: DecodeIR.cpp
+	$(CXX) $(INCLUDE) -m64 $(OPT) $(DEBUG) $(SHARED_OPTS) -o $@ $<
+
+libDecodeIR-i386.so: DecodeIR.cpp
+	$(CXX) $(INCLUDE) -m32 $(OPT) $(DEBUG) $(SHARED_OPTS) -o $@ $<
+
+zip: deploy
+	(zip -r ../$(ZIPFILE) *)
 
 clean:
-	rm lib$(NAME).so
-
-lib$(NAME).so:	$(NAME).cpp
-	g++ -shared -fPIC -o $@ $(INCLUDES) $?
+	rm -f *.so

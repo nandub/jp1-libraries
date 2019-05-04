@@ -14,13 +14,15 @@ libjp12serial.so: jp12serial.cpp jp12serial.hpp
 	$(CXX) $(INCLUDE) $(OPT) $(DEBUG) $(SHARED_OPTS) -o $@ $<
 
 ../Linux-amd64/libjp12serial.so: jp12serial.cpp jp12serial.hpp
+	$(shell ../../scripts/mkdir_p.sh "$@")
 	$(CXX) $(INCLUDE) -m64 $(OPT) $(DEBUG) $(SHARED_OPTS) -o $@ $<
 
 ../Linux-i386/libjp12serial.so: jp12serial.cpp jp12serial.hpp
+	$(shell ../../scripts/mkdir_p.sh "$@")
 	$(CXX) $(INCLUDE) -m32 $(OPT) $(DEBUG) $(SHARED_OPTS) -o $@ $<
 
 zip: deploy
-	rm -f libjp12serial.so libjp12serial.jnilib ../../$(ZIPFILE)
+	rm -f libjp12serial.so ../../$(ZIPFILE)
 	(cd ..; zip -r ../$(ZIPFILE) *)
 
 clean:

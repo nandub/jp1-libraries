@@ -12,6 +12,7 @@ libjp12serial.so: jp12serial.cpp jp12serial.hpp
 	$(CXX) $(INCLUDE) $(OPT) $(DEBUG) $(SHARED_OPTS) -o $@ $<
 
 ../Linux-arm/libjp12serial.so: jp12serial.cpp jp12serial.hpp
+	$(shell ../../scripts/mkdir_p.sh "$@")
 	$(CXX) $(INCLUDE) $(OPT) $(DEBUG) $(SHARED_OPTS) -o $@ $<
 
 clean:

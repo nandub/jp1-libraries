@@ -1,11 +1,26 @@
-NAME=DecodeIR
-JAVA_INCLUDE=/System/Library/Frameworks/JavaVM.framework/Versions/1.6.0/Home
-INCLUDES=-I$(JAVA_INCLUDE)/include -I$(JAVA_INCLUDE)/lib -Icom/hifiremote/decodeir
+JAVA_INCLUDE = $(shell ../scripts/javaenv.sh)
+INCLUDE = $(JAVA_INCLUDE)
+OPT=-O2
+DEBUG=
+SHARED_OPTS=-shared -fPIC
+EXTENSION=jnilib
+ZIPFILE=DecodeIR.zip
 
-all:	lib$(NAME).jnilib
+all: libDecodeIR.$(EXTENSION)
+
+deploy: libDecodeIR-x86_64.$(EXTENSION) libDecodeIR-i386.$(EXTENSION)
+
+libDecodeIR.$(EXTENSION): DecodeIR.cpp
+	$(CXX) $(INCLUDE) $(OPT) $(DEBUG) $(SHARED_OPTS) -o $@ $<
+
+libDecodeIR-x86_64.$(EXTENSION): DecodeIR.cpp
+	$(CXX) $(INCLUDE) -m64 $(OPT) $(DEBUG) $(SHARED_OPTS) -o "$@" "$<"
+
+libDecodeIR-i386.$(EXTENSION): DecodeIR.cpp
+	$(CXX) $(INCLUDE) -m32 $(OPT) $(DEBUG) $(SHARED_OPTS) -o "$@" "$<"
+
+zip: deploy
+	(zip -r ../$(ZIPFILE) *)
 
 clean:
-	rm lib$(NAME).jnilib
-
-lib$(NAME).jnilib:	$(NAME).cpp
-	g++ -shared -fPIC -arch ppc -o $@ $(INCLUDES) $?
+	rm -f *.$(EXTENSION)
