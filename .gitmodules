@@ -1,0 +1,3 @@
+[submodule "jp1arduino/Arduino-Makefile"]
+	path = jp1arduino/Arduino-Makefile
+	url = https://github.com/nandub/Arduino-Makefile.git

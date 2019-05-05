@@ -2,7 +2,7 @@
 */.libs/
 decodeir/decodeir
 decodeir/target
-Makefile
+decodeir/Makefile
 aclocal.m4
 autom4te.cache/
 compile
@@ -29,3 +29,6 @@ decodeir/m4/lt~obsolete.m4
 *.la
 *.jnilib
 *.zip
+#Arduino
+build-*
+
