@@ -5,5 +5,5 @@ if which jenv &> /dev/null; then
 else
   export JAVA_HOME=$(/usr/libexec/java_home)
 fi
-export JAVA_INCLUDE_PATH=${JAVA_HOME}/include
-echo -I$JAVA_INCLUDE_PATH -I$JAVA_INCLUDE_PATH/darwin
+export JAVA_INCLUDE="-I${JAVA_HOME}/include -I$JAVA_HOME/include/darwin"
+echo $JAVA_INCLUDE
